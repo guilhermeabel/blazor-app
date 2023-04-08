@@ -1,5 +1,5 @@
 ﻿@page "/"
-@using Blazor.Components
+
 
 <PageTitle>Index</PageTitle>
 
@@ -8,22 +8,4 @@
 Welcome to your new app.
 
 <br />
-<br />
 
-<h1>Todo List</h1>
-
-<TodoList Items="@todoItems" OnAdd="@(e => AddItem(e))" OnRemove="@(index => RemoveItem(index))" />
-
-@code {
-    private List<string> todoItems = new List<string>();
-
-    private void AddItem(string newItemTitle)
-    {
-        todoItems.Add(newItemTitle);
-    }
-
-    private void RemoveItem(int index)
-    {
-        todoItems.RemoveAt(index);
-    }
-}
