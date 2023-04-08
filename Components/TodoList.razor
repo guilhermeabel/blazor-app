@@ -1,0 +1,37 @@
+@using System.Collections.Generic
+
+@code {
+    [Parameter] public List<string> Items { get; set; } = new List<string>();
+    [Parameter] public EventCallback<string> OnAdd { get; set; }
+    [Parameter] public EventCallback<int> OnRemove { get; set; }
+
+    private string newItemTitle = "";
+    
+    private async Task AddItem()
+    {
+        if (!string.IsNullOrWhiteSpace(newItemTitle))
+        {
+            await OnAdd.InvokeAsync(newItemTitle);
+            newItemTitle = "";
+        }
+    }
+
+    private async Task RemoveItem(int index)
+    {
+        await OnRemove.InvokeAsync(index);
+    }
+}
+
+<div>
+    <input type="text" @bind="newItemTitle" placeholder="Enter new item..." />
+    <button @onclick="AddItem">Add</button>
+</div>
+<ul>
+    @foreach (var item in Items)
+    {
+        <li>
+            <TodoItem Title="@item" />
+            <button @onclick="() => RemoveItem(Items.IndexOf(item))">Remove</button>
+        </li>
+    }
+</ul>

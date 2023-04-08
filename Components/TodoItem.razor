@@ -1,0 +1,14 @@
+@code {
+    [Parameter] public string? Title { get; set; }
+    [Parameter] public bool IsCompleted { get; set; }
+    [Parameter] public EventCallback<bool> OnToggle { get; set; }
+
+    private async Task Toggle()
+    {
+        IsCompleted = !IsCompleted;
+        await OnToggle.InvokeAsync(IsCompleted);
+    }
+}
+<div @onclick="Toggle" class="@(IsCompleted ? "completed" : "")">
+    @Title
+</div>
